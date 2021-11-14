@@ -1,0 +1,31 @@
+<a href="/upload" class="btn btn-primary">Upload</a>
+<form method="post" name="frm">
+	<div class="form-group">
+		<label></label>
+		<input class="form-control" type="file" name="f">
+	</div>
+	<div class="form-group">
+		<button class="btn btn-primary">Upload</button>
+	</div>
+</form>
+<div id="rs"></div>
+<script type="text/javascript">
+	window.onload = function() {
+		$(frm).submit(function(ev) {
+			ev.preventDefault();
+			var fd = new FormData();
+			fd.append('f', frm['f'].files[0]);
+			$.ajax({
+				url: '/upload',
+				type: 'post',
+				processData: false,
+				contentType:false,
+				data: fd,
+				success: function(o) {
+					console.log(o);
+					$(rs).append(`<img width="100" src="/upload/${o['img']}">`);
+				}
+			});
+		});
+	}
+</script>
